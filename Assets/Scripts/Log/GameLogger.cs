@@ -1,6 +1,6 @@
 /// <summary>
-/// ·â×°DebugÈÕÖ¾´òÓ¡£¬ÊµÏÖÈÕÖ¾¿ª¹Ø¿ØÖÆ¡¢²ÊÉ«ÈÕÖ¾´òÓ¡¡¢ÈÕÖ¾ÎÄ¼ş´æ´¢µÈ¹¦ÄÜ
-/// ×÷Õß£ºÁÖĞÂ·¢ ²©¿Í£ºhttps://blog.csdn.net/linxinfa
+/// å°è£…Debugæ—¥å¿—æ‰“å°ï¼Œå®ç°æ—¥å¿—å¼€å…³æ§åˆ¶ã€å½©è‰²æ—¥å¿—æ‰“å°ã€æ—¥å¿—æ–‡ä»¶å­˜å‚¨ç­‰åŠŸèƒ½
+/// ä½œè€…ï¼šæ—æ–°å‘ åšå®¢ï¼šhttps://blog.csdn.net/linxinfa
 /// </summary>
 
 using UnityEngine;
@@ -9,24 +9,27 @@ using System.IO;
 
 public class GameLogger
 {
-    // ÆÕÍ¨µ÷ÊÔÈÕÖ¾¿ª¹Ø
+    // æ™®é€šè°ƒè¯•æ—¥å¿—å¼€å…³
     public static bool s_debugLogEnable = true;
-    // ¾¯¸æÈÕÖ¾¿ª¹Ø
+    // è­¦å‘Šæ—¥å¿—å¼€å…³
     public static bool s_warningLogEnable = true;
-    // ´íÎóÈÕÖ¾¿ª¹Ø
+    // é”™è¯¯æ—¥å¿—å¼€å…³
     public static bool s_errorLogEnable = true;
 
-    // Ê¹ÓÃStringBuilderÀ´ÓÅ»¯×Ö·û´®µÄÖØ¸´¹¹Ôì
+    public static bool s_saveLog = false;
+    // ä½¿ç”¨StringBuilderæ¥ä¼˜åŒ–å­—ç¬¦ä¸²çš„é‡å¤æ„é€ 
     private static StringBuilder s_logStr = new StringBuilder();
-    // ÈÕÖ¾ÎÄ¼ş´æ´¢Î»ÖÃ
+    // æ—¥å¿—æ–‡ä»¶å­˜å‚¨ä½ç½®
     private static string s_logFileSavePath;
 
     /// <summary>
-    /// ³õÊ¼»¯£¬ÔÚÓÎÏ·Æô¶¯µÄÈë¿Ú½Å±¾µÄAwakeº¯ÊıÖĞµ÷ÓÃGameLogger.Init
+    /// åˆå§‹åŒ–ï¼Œåœ¨æ¸¸æˆå¯åŠ¨çš„å…¥å£è„šæœ¬çš„Awakeå‡½æ•°ä¸­è°ƒç”¨GameLogger.Init
     /// </summary>
     public static void Init()
     {
-        // ÈÕÆÚ
+        if (!s_saveLog) return;
+        
+        // æ—¥æœŸ
         var t = System.DateTime.Now.ToString("yyyyMMddhhmmss");
         
 #if UNITY_STANDALONE || UNITY_EDITOR
@@ -41,11 +44,11 @@ public class GameLogger
     }
 
     /// <summary>
-    /// ´òÓ¡ÈÕÖ¾»Øµ÷
+    /// æ‰“å°æ—¥å¿—å›è°ƒ
     /// </summary>
-    /// <param name="condition">ÈÕÖ¾ÎÄ±¾</param>
-    /// <param name="stackTrace">µ÷ÓÃ¶ÑÕ»</param>
-    /// <param name="type">ÈÕÖ¾ÀàĞÍ</param>
+    /// <param name="condition">æ—¥å¿—æ–‡æœ¬</param>
+    /// <param name="stackTrace">è°ƒç”¨å †æ ˆ</param>
+    /// <param name="type">æ—¥å¿—ç±»å‹</param>
     private static void OnLogCallBack(string condition, string stackTrace, LogType type)
     {
         s_logStr.Append(condition);
@@ -70,7 +73,7 @@ public class GameLogger
     }
 
     /// <summary>
-    /// ÆÕÍ¨µ÷ÊÔÈÕÖ¾
+    /// æ™®é€šè°ƒè¯•æ—¥å¿—
     /// </summary>
     public static void Log(object message, Object context = null)
     {
@@ -79,10 +82,10 @@ public class GameLogger
     }
 
     /// <summary>
-    /// ¸ñÊ½»¯´òÓ¡ÈÕÖ¾
+    /// æ ¼å¼åŒ–æ‰“å°æ—¥å¿—
     /// </summary>
-    /// <param name="format">Àı£º"a is {0}, b is {1}"</param>
-    /// <param name="args">¿É±ä²ÎÊı£¬¸ù¾İformatµÄ¸ñÊ½´«ÈëÆ¥ÅäµÄ²ÎÊı£¬Àı£ºa, b</param>
+    /// <param name="format">ä¾‹ï¼š"a is {0}, b is {1}"</param>
+    /// <param name="args">å¯å˜å‚æ•°ï¼Œæ ¹æ®formatçš„æ ¼å¼ä¼ å…¥åŒ¹é…çš„å‚æ•°ï¼Œä¾‹ï¼ša, b</param>
     public static void LogFormat(string format, params object[] args)
     {
         if (!s_debugLogEnable) return;
@@ -90,11 +93,11 @@ public class GameLogger
     }
 
     /// <summary>
-    /// ´øÑÕÉ«µÄÈÕÖ¾
+    /// å¸¦é¢œè‰²çš„æ—¥å¿—
     /// </summary>
     /// <param name="message"></param>
-    /// <param name="color">ÑÕÉ«Öµ£¬Àı£ºgreen, yellow£¬#ff0000</param>
-    /// <param name="context">ÉÏÏÂÎÄ¶ÔÏó</param>
+    /// <param name="color">é¢œè‰²å€¼ï¼Œä¾‹ï¼šgreen, yellowï¼Œ#ff0000</param>
+    /// <param name="context">ä¸Šä¸‹æ–‡å¯¹è±¡</param>
     public static void LogWithColor(object message, string color, Object context = null)
     {
         if (!s_debugLogEnable) return;
@@ -102,7 +105,7 @@ public class GameLogger
     }
 
     /// <summary>
-    /// ºìÉ«ÈÕÖ¾
+    /// çº¢è‰²æ—¥å¿—
     /// </summary>
     public static void LogRed(object message, Object context = null)
     {
@@ -111,7 +114,7 @@ public class GameLogger
     }
 
     /// <summary>
-    /// ÂÌÉ«ÈÕÖ¾
+    /// ç»¿è‰²æ—¥å¿—
     /// </summary>
     public static void LogGreen(object message, Object context = null)
     {
@@ -120,7 +123,7 @@ public class GameLogger
     }
 
     /// <summary>
-    /// »ÆÉ«ÈÕÖ¾
+    /// é»„è‰²æ—¥å¿—
     /// </summary>
     public static void LogYellow(object message, Object context = null)
     {
@@ -129,7 +132,7 @@ public class GameLogger
     }
 
     /// <summary>
-    /// ÇàÀ¶É«ÈÕÖ¾
+    /// é’è“è‰²æ—¥å¿—
     /// </summary>
     public static void LogCyan(object message, Object context = null)
     {
@@ -138,7 +141,7 @@ public class GameLogger
     }
 
     /// <summary>
-    /// ´øÑÕÉ«µÄ¸ñÊ½»¯ÈÕÖ¾´òÓ¡
+    /// å¸¦é¢œè‰²çš„æ ¼å¼åŒ–æ—¥å¿—æ‰“å°
     /// </summary>
     public static void LogFormatWithColor(string format, string color, params object[] args)
     {
@@ -147,7 +150,7 @@ public class GameLogger
     }
 
     /// <summary>
-    /// ¾¯¸æÈÕÖ¾
+    /// è­¦å‘Šæ—¥å¿—
     /// </summary>
     public static void LogWarning(object message, Object context = null)
     {
@@ -156,7 +159,7 @@ public class GameLogger
     }
 
     /// <summary>
-    /// ´íÎóÈÕÖ¾
+    /// é”™è¯¯æ—¥å¿—
     /// </summary>
     public static void LogError(object message, Object context = null)
     {
@@ -165,7 +168,7 @@ public class GameLogger
     }
 
     /// <summary>
-    /// ¸ñÊ½»¯ÑÕÉ«ÈÕÖ¾
+    /// æ ¼å¼åŒ–é¢œè‰²æ—¥å¿—
     /// </summary>
     private static object FmtColor(string color, object obj)
     {
@@ -188,7 +191,7 @@ public class GameLogger
     }
 
     /// <summary>
-    /// ¸ñÊ½»¯ÑÕÉ«ÈÕÖ¾
+    /// æ ¼å¼åŒ–é¢œè‰²æ—¥å¿—
     /// </summary>
     private static object FmtColor(string color, string msg)
     {
@@ -196,14 +199,14 @@ public class GameLogger
         return msg;
 #else
         int p = msg.IndexOf('\n');
-        if (p >= 0) p = msg.IndexOf('\n', p + 1);// ¿ÉÒÔÍ¬Ê±ÏÔÊ¾Á½ĞĞ
+        if (p >= 0) p = msg.IndexOf('\n', p + 1);// å¯ä»¥åŒæ—¶æ˜¾ç¤ºä¸¤è¡Œ
         if (p < 0 || p >= msg.Length - 1) return string.Format("<color={0}>{1}</color>", color, msg);
         if (p > 2 && msg[p - 1] == '\r') p--;
         return string.Format("<color={0}>{1}</color>{2}", color, msg.Substring(0, p), msg.Substring(p));
 #endif
     }
 
-#region ½â¾öÈÕÖ¾Ë«»÷ËİÔ´ÎÊÌâ
+#region è§£å†³æ—¥å¿—åŒå‡»æº¯æºé—®é¢˜
 #if UNITY_EDITOR
     [UnityEditor.Callbacks.OnOpenAssetAttribute(0)]
     static bool OnOpenAsset(int instanceID, int line)
@@ -211,7 +214,7 @@ public class GameLogger
         string stackTrace = GetStackTrace();
         if (!string.IsNullOrEmpty(stackTrace) && stackTrace.Contains("GameLogger:Log"))
         {
-            // Ê¹ÓÃÕıÔò±í´ïÊ½Æ¥ÅäatµÄÄÄ¸ö½Å±¾µÄÄÄÒ»ĞĞ
+            // ä½¿ç”¨æ­£åˆ™è¡¨è¾¾å¼åŒ¹é…atçš„å“ªä¸ªè„šæœ¬çš„å“ªä¸€è¡Œ
             var matches = System.Text.RegularExpressions.Regex.Match(stackTrace, @"\(at (.+)\)",
                 System.Text.RegularExpressions.RegexOptions.IgnoreCase);
             string pathLine = "";
@@ -222,13 +225,13 @@ public class GameLogger
                 if (!pathLine.Contains("GameLogger.cs"))
                 {
                     int splitIndex = pathLine.LastIndexOf(":");
-                    // ½Å±¾Â·¾¶
+                    // è„šæœ¬è·¯å¾„
                     string path = pathLine.Substring(0, splitIndex);
-                    // ĞĞºÅ
+                    // è¡Œå·
                     line = System.Convert.ToInt32(pathLine.Substring(splitIndex + 1));
                     string fullPath = Application.dataPath.Substring(0, Application.dataPath.LastIndexOf("Assets"));
                     fullPath = fullPath + path;
-                    // Ìø×ªµ½Ä¿±ê´úÂëµÄÌØ¶¨ĞĞ
+                    // è·³è½¬åˆ°ç›®æ ‡ä»£ç çš„ç‰¹å®šè¡Œ
                     UnityEditorInternal.InternalEditorUtility.OpenFileAtLineExternal(fullPath.Replace('/', '\\'), line);
                     break;
                 }
@@ -240,14 +243,14 @@ public class GameLogger
     }
 
     /// <summary>
-    /// »ñÈ¡µ±Ç°ÈÕÖ¾´°¿ÚÑ¡ÖĞµÄÈÕÖ¾µÄ¶ÑÕ»ĞÅÏ¢
+    /// è·å–å½“å‰æ—¥å¿—çª—å£é€‰ä¸­çš„æ—¥å¿—çš„å †æ ˆä¿¡æ¯
     /// </summary>
     /// <returns></returns>
     static string GetStackTrace()
     {
-        // Í¨¹ı·´Éä»ñÈ¡ConsoleWindowÀà
+        // é€šè¿‡åå°„è·å–ConsoleWindowç±»
         var ConsoleWindowType = typeof(UnityEditor.EditorWindow).Assembly.GetType("UnityEditor.ConsoleWindow");
-        // »ñÈ¡´°¿ÚÊµÀı
+        // è·å–çª—å£å®ä¾‹
         var fieldInfo = ConsoleWindowType.GetField("ms_ConsoleWindow",
             System.Reflection.BindingFlags.Static |
             System.Reflection.BindingFlags.NonPublic);
@@ -256,11 +259,11 @@ public class GameLogger
         {
             if ((object)UnityEditor.EditorWindow.focusedWindow == consoleInstance)
             {
-                // »ñÈ¡m_ActiveText³ÉÔ±
+                // è·å–m_ActiveTextæˆå‘˜
                 fieldInfo = ConsoleWindowType.GetField("m_ActiveText",
                     System.Reflection.BindingFlags.Instance |
                     System.Reflection.BindingFlags.NonPublic);
-                // »ñÈ¡m_ActiveTextµÄÖµ
+                // è·å–m_ActiveTextçš„å€¼
                 string activeText = fieldInfo.GetValue(consoleInstance).ToString();
                 return activeText;
             }
@@ -268,5 +271,5 @@ public class GameLogger
         return null;
     }
 #endif
-#endregion ½â¾öÈÕÖ¾Ë«»÷ËİÔ´ÎÊÌâ
+#endregion è§£å†³æ—¥å¿—åŒå‡»æº¯æºé—®é¢˜
 }

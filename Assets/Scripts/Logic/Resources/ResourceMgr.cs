@@ -6,7 +6,7 @@ using System.IO;
 public class ResourceMgr
 {
     /// <summary>
-    /// Ô¤¼ÓÔØ»ù´¡µÄBundle×ÊÔ´
+    /// é¢„åŠ è½½åŸºç¡€çš„Bundleèµ„æº
     /// </summary>
     public void PreloadBaseBundle()
     {
@@ -14,7 +14,7 @@ public class ResourceMgr
     }
 
     /// <summary>
-    /// Ô¤¼ÓÔØluaµÄAssetBundle
+    /// é¢„åŠ è½½luaçš„AssetBundle
     /// </summary>
     public void PreloadLuaBundles()
     {
@@ -38,13 +38,13 @@ public class ResourceMgr
 #if UNITY_EDITOR
         obj = UnityEditor.AssetDatabase.LoadAssetAtPath<T>("Assets/GameRes/" + resPath);
 #else
-        // resources.bytesµÄµÚÒ»¼¶Ä¿Â¼ÎªAssetBundle
+        // resources.bytesçš„ç¬¬ä¸€çº§ç›®å½•ä¸ºAssetBundle
         var abName = resPath.Substring(0, resPath.IndexOf("/")).ToLower() + ".bundle";
         var fname = Path.GetFileName(resPath);
         AssetBundle ab = null;
         if(File.Exists(updatePath + "/" + fname))
         {
-            // ÈÈ¸üµÄ×ÊÔ´£¬ÊÇÒ»¸ö¶ÀÁ¢µÄAssetBundleÎÄ¼ş£¬ÒÔfnameÎªÎÄ¼şÃû
+            // çƒ­æ›´çš„èµ„æºï¼Œæ˜¯ä¸€ä¸ªç‹¬ç«‹çš„AssetBundleæ–‡ä»¶ï¼Œä»¥fnameä¸ºæ–‡ä»¶å
             ab = LoadAssetBundle(fname);
         }
         else
@@ -72,7 +72,7 @@ public class ResourceMgr
         AssetBundle bundle = null;
         if (File.Exists(updatePath + "/" + abName))
         {
-            // ÓÅÏÈ´ÓupdateÄ¿Â¼£¨ÈÈ¸üĞÂÄ¿Â¼£©ÖĞ²éÕÒ×ÊÔ´
+            // ä¼˜å…ˆä»updateç›®å½•ï¼ˆçƒ­æ›´æ–°ç›®å½•ï¼‰ä¸­æŸ¥æ‰¾èµ„æº
             bundle = AssetBundle.LoadFromFile(updatePath + "/" + abName);
         }
         else
@@ -81,10 +81,10 @@ public class ResourceMgr
         }
 
         /*
-        // Èç¹û¶ÔAssetBundle×öÁË¼ÓÃÜ´¦Àí£¬ÔòĞèÒªÊ¹ÓÃÁ÷Ê½¶ÁÈ¡£¬½øĞĞ½âÃÜºóÔÙÍ¨¹ıAssetBundle.LoadFromMemory¼ÓÔØAssetBundle
+        // å¦‚æœå¯¹AssetBundleåšäº†åŠ å¯†å¤„ç†ï¼Œåˆ™éœ€è¦ä½¿ç”¨æµå¼è¯»å–ï¼Œè¿›è¡Œè§£å¯†åå†é€šè¿‡AssetBundle.LoadFromMemoryåŠ è½½AssetBundle
         byte[] stream = null;
         stream = File.ReadAllBytes(path + "/" + abName);
-        // TOOD ¶Ôstream×ö½âÃÜ
+        // TOOD å¯¹streamåšè§£å¯†
 
         var bundle = AssetBundle.LoadFromMemory(stream); 
         */

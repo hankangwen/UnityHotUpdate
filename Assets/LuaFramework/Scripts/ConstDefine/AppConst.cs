@@ -18,7 +18,7 @@ namespace LuaFramework
         public const string AssetDir = "StreamingAssets";
 
         // Web服务器地址，用于热更
-        public const string WebUrl = "http://localhost:7890/";     
+        public const string WebUrl = "http://localhost:80/";     
 
         // 游戏服务器IP
         public const string SocketAddress = "";
